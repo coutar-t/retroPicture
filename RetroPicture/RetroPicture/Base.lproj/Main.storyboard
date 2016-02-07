@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="RetroPicture" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0kj-qh-39T">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" onImage="Picture" offImage="Video" translatesAutoresizingMaskIntoConstraints="NO" id="fiY-8h-L9G">
+                                <rect key="frame" x="58" y="616" width="51" height="31"/>
+                            </switch>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Picture" translatesAutoresizingMaskIntoConstraints="NO" id="Lsi-M3-vG6">
+                                <rect key="frame" x="115" y="618" width="27" height="25"/>
+                                <color key="backgroundColor" red="0.78259980366492143" green="0.78259980366492143" blue="0.78259980366492143" alpha="0.60999999999999999" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Video" translatesAutoresizingMaskIntoConstraints="NO" id="9fK-OJ-LdG">
+                                <rect key="frame" x="20" y="618" width="30" height="25"/>
+                                <color key="backgroundColor" red="0.72480425086049916" green="0.74173992378248543" blue="0.78259980366492143" alpha="0.60999999999999999" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AOp-YH-zyv">
+                                <rect key="frame" x="162" y="597" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.78259980366492143" green="0.78259980366492143" blue="0.78259980366492143" alpha="0.6122839095744681" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="ClickPicture"/>
+                                <connections>
+                                    <action selector="takePictureClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="i6P-yB-2RZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="imageView" destination="0kj-qh-39T" id="NSV-Ie-yoe"/>
+                        <segue destination="gvb-CF-sCN" kind="show" identifier="takePicture" id="YF9-Ou-efp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="244.5" y="289.5"/>
+        </scene>
+        <!--Save Picture Controller-->
+        <scene sceneID="7Iy-Ln-p4j">
+            <objects>
+                <viewController id="gvb-CF-sCN" customClass="SavePictureController" customModule="RetroPicture" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Pfo-Bq-hln"/>
+                        <viewControllerLayoutGuide type="bottom" id="erX-L5-aIi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="utD-et-RsL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BmG-zg-XWU">
+                                <rect key="frame" x="20" y="79" width="335" height="415"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zHK-nt-Zgc">
+                                <rect key="frame" x="20" y="540" width="175" height="30"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="OnSaveClick:" destination="gvb-CF-sCN" eventType="touchUpInside" id="cV2-0Q-HlH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ys-i1-6Af">
+                                <rect key="frame" x="203" y="540" width="152" height="30"/>
+                                <state key="normal" title="Share"/>
+                                <connections>
+                                    <action selector="OnShareClick:" destination="gvb-CF-sCN" eventType="touchUpInside" id="dFR-Um-pPY"/>
+                                </connections>
+                            </button>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2dw-ae-C3g">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <navigationItem id="Rwk-jd-5sh">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="W1f-b1-dvJ">
+                                            <connections>
+                                                <action selector="OnBackClick:" destination="gvb-CF-sCN" id="XTO-uj-GlC"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="myImageView" destination="BmG-zg-XWU" id="Hs5-1b-he4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LkU-FS-vqX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="742.5" y="289.5"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ClickPicture" width="50" height="50"/>
+        <image name="Picture" width="50" height="50"/>
+        <image name="Video" width="50" height="50"/>
+    </resources>
+</document>
