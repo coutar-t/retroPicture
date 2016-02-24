@@ -45,7 +45,7 @@
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="imageView" destination="0kj-qh-39T" id="NSV-Ie-yoe"/>
+                        <outlet property="imageView" destination="0kj-qh-39T" id="1g9-Jp-JC6"/>
                         <segue destination="gvb-CF-sCN" kind="show" identifier="takePicture" id="YF9-Ou-efp"/>
                     </connections>
                 </viewController>

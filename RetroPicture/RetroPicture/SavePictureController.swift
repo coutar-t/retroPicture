@@ -8,14 +8,15 @@
 
 import Foundation
 import UIKit
+import AssetsLibrary
 
 class SavePictureController : UIViewController {
-    var myPicture : UIImage?
+    var myPicture : CIImage!
     
     @IBOutlet weak var myImageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.myImageView.image = myPicture
+        self.myImageView.image = UIImage(CIImage: myPicture, scale: 1, orientation: .Right)
     }
     
     @IBAction func OnBackClick(sender: AnyObject) {
@@ -23,8 +24,15 @@ class SavePictureController : UIViewController {
     }
     
     @IBAction func OnShareClick(sender: AnyObject) {
+        var sharingItem = [AnyObject]()
+        let softwareContext = CIContext(options:[kCIContextUseSoftwareRenderer: true])
+        
+        // 3
+        let cgimg = softwareContext.createCGImage(myPicture, fromRect:myPicture.extent)
+
+        sharingItem.append(UIImage(CGImage:cgimg, scale: 1, orientation: .Right))
         let activityViewController : UIActivityViewController = UIActivityViewController(
-            activityItems: [self.myPicture!],
+            activityItems: sharingItem,
             applicationActivities: nil)
         let presentationController = activityViewController.popoverPresentationController
         presentationController?.sourceView = sender as! UIView // Needed to support the iPads
@@ -37,6 +45,15 @@ class SavePictureController : UIViewController {
     }
     
     @IBAction func OnSaveClick(sender: AnyObject) {
-        UIImageWriteToSavedPhotosAlbum(self.myPicture!, nil, nil, nil)
-    }
+        // 2
+        let softwareContext = CIContext(options:[kCIContextUseSoftwareRenderer: true])
+        
+        // 3
+        let cgimg = softwareContext.createCGImage(myPicture, fromRect:myPicture.extent)
+        
+        // 4
+        let library = ALAssetsLibrary()
+        library.writeImageToSavedPhotosAlbum(cgimg,
+            metadata:myPicture.properties,
+            completionBlock:nil)    }
 }

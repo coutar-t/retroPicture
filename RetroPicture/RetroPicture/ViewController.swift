@@ -11,15 +11,16 @@ import AVFoundation
 
 class ViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     let stillImageOutput = AVCaptureStillImageOutput()
+    let mixpanel = Mixpanel.sharedInstanceWithToken("b59b2852f2e7d98331cfb3952b8fee5a")
     
     @IBOutlet weak var imageView: UIImageView!
     //Camera Capture requiered properties
-    var videoDataOutput: AVCaptureVideoDataOutput!;
+    var videoDataOutput: AVCaptureVideoDataOutput!; 
     var videoDataOutputQueue : dispatch_queue_t!;
     var previewLayer:AVCaptureVideoPreviewLayer!;
-    var captureDevice : AVCaptureDevice!
+    var videoDevice : AVCaptureDevice!
     let session=AVCaptureSession();
-    var imageData : UIImage?
+    var imageData : CIImage!
     
     @IBAction func takePictureClick(sender: AnyObject) {
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
@@ -30,10 +31,9 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
             if let currentFilter = CIFilter(name: "CISepiaTone") {
                 let beginImage = CIImage(data: data)
                 currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-                let filteredImage = UIImage(CIImage: currentFilter.valueForKey(kCIOutputImageKey) as! CIImage!)
                 dispatch_async(dispatch_get_main_queue())
                     {
-                        self.imageData = filteredImage
+                        self.imageData = currentFilter.outputImage
                         self.performSegueWithIdentifier("takePicture", sender: sender)
                 }
             }
@@ -44,13 +44,14 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "takePicture") {
             let galleryItemViewController = segue.destinationViewController as? SavePictureController
-            galleryItemViewController?.myPicture =  imageData
+            galleryItemViewController!.myPicture =  self.imageData
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.mixpanel.track("FIRST", properties: ["filter" : "1"]);
         self.session.sessionPreset = AVCaptureSessionPresetPhoto
         self.session.startRunning()
         stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
@@ -86,8 +87,8 @@ extension ViewController:  AVCaptureVideoDataOutputSampleBufferDelegate{
         for device in devices {
             if (device.hasMediaType(AVMediaTypeVideo)) {
                 if(device.position == AVCaptureDevicePosition.Back) {
-                    captureDevice = device as? AVCaptureDevice;
-                    if captureDevice != nil {
+                    videoDevice = device as? AVCaptureDevice;
+                    if videoDevice != nil {
                         beginSession();
                         break;
                     }
@@ -100,7 +101,7 @@ extension ViewController:  AVCaptureVideoDataOutputSampleBufferDelegate{
         var err : NSError? = nil
         var deviceInput:AVCaptureDeviceInput?
         do {
-            deviceInput = try AVCaptureDeviceInput(device: captureDevice)
+            deviceInput = try AVCaptureDeviceInput(device: videoDevice)
         } catch let error as NSError {
             err = error
             deviceInput = nil
@@ -134,7 +135,7 @@ extension ViewController:  AVCaptureVideoDataOutputSampleBufferDelegate{
         let comicEffect = CIFilter(name: "CISepiaTone")
     
         comicEffect!.setValue(cameraImage, forKey: kCIInputImageKey)
-        let filteredImage = UIImage(CIImage: comicEffect!.valueForKey(kCIOutputImageKey) as! CIImage!)
+        let filteredImage = UIImage(CIImage: comicEffect!.outputImage!)
         dispatch_async(dispatch_get_main_queue())
             {
                 self.imageView.image = filteredImage
