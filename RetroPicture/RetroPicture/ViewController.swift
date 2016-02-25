@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+// View with cameraPreview
 class ViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     let stillImageOutput = AVCaptureStillImageOutput()
     let mixpanel = Mixpanel.sharedInstanceWithToken("b59b2852f2e7d98331cfb3952b8fee5a")

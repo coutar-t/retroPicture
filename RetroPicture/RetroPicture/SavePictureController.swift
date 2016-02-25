@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AssetsLibrary
 
+// View Manage Picture (save, share)
 class SavePictureController : UIViewController {
     var myPicture : CIImage!
     
@@ -35,7 +36,7 @@ class SavePictureController : UIViewController {
             activityItems: sharingItem,
             applicationActivities: nil)
         let presentationController = activityViewController.popoverPresentationController
-        presentationController?.sourceView = sender as! UIView // Needed to support the iPads
+        presentationController?.sourceView = sender as? UIView // Needed to support the iPads
         presentationController?.sourceRect = CGRect(
             origin: CGPointZero,
             size: CGSize(width: sender.frame.width, height: sender.frame.height))

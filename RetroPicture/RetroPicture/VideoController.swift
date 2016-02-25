@@ -9,6 +9,8 @@
 import AVFoundation
 import UIKit
 
+
+// Test with take video only
 class VideoController : UIViewController, AVCaptureFileOutputRecordingDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
     @IBOutlet weak var imageView: UIImageView!
     var session : AVCaptureSession?
