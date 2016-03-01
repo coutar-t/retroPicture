@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import AssetsLibrary
+import Photos
 
 // View Manage Picture (save, share)
 class SavePictureController : UIViewController {
@@ -28,7 +28,6 @@ class SavePictureController : UIViewController {
         var sharingItem = [AnyObject]()
         let softwareContext = CIContext(options:[kCIContextUseSoftwareRenderer: true])
         
-        // 3
         let cgimg = softwareContext.createCGImage(myPicture, fromRect:myPicture.extent)
 
         sharingItem.append(UIImage(CGImage:cgimg, scale: 1, orientation: .Right))
@@ -46,15 +45,19 @@ class SavePictureController : UIViewController {
     }
     
     @IBAction func OnSaveClick(sender: AnyObject) {
-        // 2
         let softwareContext = CIContext(options:[kCIContextUseSoftwareRenderer: true])
-        
-        // 3
         let cgimg = softwareContext.createCGImage(myPicture, fromRect:myPicture.extent)
-        
-        // 4
-        let library = ALAssetsLibrary()
-        library.writeImageToSavedPhotosAlbum(cgimg,
-            metadata:myPicture.properties,
-            completionBlock:nil)    }
+        PHPhotoLibrary.sharedPhotoLibrary().performChanges({ () -> Void in
+            PHAssetCreationRequest.creationRequestForAssetFromImage(UIImage(CGImage: cgimg))
+            }, completionHandler: { (success, error) -> Void in
+                if success {
+                    print("it works!!!")
+                }
+                if error != nil {
+                    print(error?.localizedDescription)
+                }
+        }
+    )
+//        library.writeImageToSavedPhotosAlbum(cgimg, metadata:myPicture.properties, completionBlock:nil)
+    }
 }

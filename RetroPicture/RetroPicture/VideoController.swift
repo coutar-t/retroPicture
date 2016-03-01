@@ -15,6 +15,8 @@ class VideoController : UIViewController, AVCaptureFileOutputRecordingDelegate, 
     @IBOutlet weak var imageView: UIImageView!
     var session : AVCaptureSession?
     var torch : AVCaptureDevice?
+    var previewLayer:AVCaptureVideoPreviewLayer!;
+
     var output : AVCaptureMovieFileOutput!
     var connection : AVCaptureConnection?
     
@@ -43,35 +45,35 @@ class VideoController : UIViewController, AVCaptureFileOutputRecordingDelegate, 
                 if device.position == .Back{
                     print("Device position: back.")
                     camera = device
-                }   }   }
+                }
+            }
+        }
         
         // audio
-        var err : NSError? = nil
         var VideoInput : AVCaptureDeviceInput?
         var audioInput : AVCaptureDeviceInput?
         do {
         if (microphone != nil){
-            var audioInput = try AVCaptureDeviceInput(device: microphone)
+            audioInput = try AVCaptureDeviceInput(device: microphone)
         }
         // video input
         if (camera != nil){
-            var VideoInput = try AVCaptureDeviceInput(device: camera)
+            VideoInput = try AVCaptureDeviceInput(device: camera)
         }
         } catch let error as NSError {
-            err = error
+            print("Error when get device : \(error.description)")
         };
         if self.session!.canAddInput(audioInput){
             self.session!.addInput(audioInput);
         }
-        /*if self.session!.canAddInput(VideoInput){
+        if self.session!.canAddInput(VideoInput){
             self.session!.addInput(VideoInput);
-        }*/
-
+        }
         
+        let preferredTimeScale:Int32 = 30
+        let totalSeconds:Int64 = Int64(Int(7) * Int(preferredTimeScale)) // after 7 sec video recording stop automatically
+        let maxDuration:CMTime = CMTimeMake(totalSeconds, preferredTimeScale)
         self.output = AVCaptureMovieFileOutput()
-        var preferredTimeScale:Int32 = 30
-        var totalSeconds:Int64 = Int64(Int(7) * Int(preferredTimeScale)) // after 7 sec video recording stop automatically
-        var maxDuration:CMTime = CMTimeMake(totalSeconds, preferredTimeScale)
         self.output!.maxRecordedDuration = maxDuration
         
         self.output!.minFreeDiskSpaceLimit = 1024 * 1024
@@ -79,18 +81,20 @@ class VideoController : UIViewController, AVCaptureFileOutputRecordingDelegate, 
         if session!.canAddOutput(self.output){
             session!.addOutput(self.output)
         }
-        
+        self.previewLayer = AVCaptureVideoPreviewLayer(session: self.session)
+        self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspect;
         self.connection = self.output.connectionWithMediaType(AVMediaTypeVideo)
         if self.connection!.supportsVideoStabilization == true{
             print("video stabilization avaible")
-            self.connection!.enablesVideoStabilizationWhenAvailable = true
+            self.connection!.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.Auto
         }
-        self.connection!.videoOrientation = .LandscapeRight
+        self.connection!.videoOrientation = .PortraitUpsideDown
         
         self.session!.startRunning()
     }
     
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
+        print("I'm here")
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let cameraImage = CIImage(CVPixelBuffer: pixelBuffer!)
         let comicEffect = CIFilter(name: "CISepiaTone")
@@ -112,7 +116,7 @@ class VideoController : UIViewController, AVCaptureFileOutputRecordingDelegate, 
     func stopRecording(){
         self.output!.stopRecording()
     }
-    @IBAction func onClickStart(sender: AnyObject) {
+    @IBAction func takePictureClick(sender: AnyObject) {
         startRecording()
     }
     
@@ -120,7 +124,7 @@ class VideoController : UIViewController, AVCaptureFileOutputRecordingDelegate, 
         print("Finish recording")
         var success:Bool = false
         if error != 0 && error != nil{
-            print("error")
+            print("error : \(error)")
             let value: AnyObject? = error.userInfo[AVErrorRecordingSuccessfullyFinishedKey]
             if value == nil{
                 success = true

@@ -22,6 +22,8 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     var videoDevice : AVCaptureDevice!
     let session=AVCaptureSession();
     var imageData : CIImage!
+    var effect = ["CISepiaTone", "CIPhotoEffectNoir", "CICrystallize", "CIEdges", "CIEdgeWork", "CIGloom", "CIHexagonalPixellate", "CILineOverlay", "CIPixellate", "CIPointillize"]
+    var selectedEffect : Int!
     
     @IBAction func takePictureClick(sender: AnyObject) {
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
@@ -29,15 +31,14 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
             (imageDataSampleBuffer, error) -> Void in
             let data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
             
-            if let currentFilter = CIFilter(name: "CISepiaTone") {
-                let beginImage = CIImage(data: data)
+            let beginImage = CIImage(data: data)
+            let currentFilter = self.getFilter(beginImage)
                 currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
                 dispatch_async(dispatch_get_main_queue())
                     {
                         self.imageData = currentFilter.outputImage
                         self.performSegueWithIdentifier("takePicture", sender: sender)
                 }
-            }
             }
         }
     }
@@ -52,6 +53,7 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.selectedEffect = 0
         self.mixpanel.track("FIRST", properties: ["filter" : "1"]);
         self.session.sessionPreset = AVCaptureSessionPresetPhoto
         self.session.startRunning()
@@ -60,6 +62,35 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
             self.session.addOutput(stillImageOutput)
         }
         self.setupAVCapture();
+        
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(swipeLeft)
+    }
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            
+            
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.Right:
+                self.selectedEffect = self.selectedEffect + 1 >= self.effect.count ? 0 : self.selectedEffect + 1
+            case UISwipeGestureRecognizerDirection.Down:
+                print("Swiped down")
+            case UISwipeGestureRecognizerDirection.Left:
+                self.selectedEffect = self.selectedEffect - 1 < 0 ? self.effect.count - 1 : self.selectedEffect - 1
+            case UISwipeGestureRecognizerDirection.Up:
+                print("Swiped up")
+            default:
+                break
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -82,6 +113,7 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
 }
 
 extension ViewController:  AVCaptureVideoDataOutputSampleBufferDelegate{
+    
     func setupAVCapture(){
         session.sessionPreset = AVCaptureSessionPreset640x480;
         let devices = AVCaptureDevice.devices();
@@ -130,13 +162,17 @@ extension ViewController:  AVCaptureVideoDataOutputSampleBufferDelegate{
         
     }
     
+    func getFilter(cameraImage: CIImage!) -> CIFilter {
+        var comicEffect = CIFilter(name: self.effect[self.selectedEffect])
+        comicEffect!.setValue(cameraImage, forKey: kCIInputImageKey)
+        return comicEffect!
+    }
+    
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let cameraImage = CIImage(CVPixelBuffer: pixelBuffer!)
-        let comicEffect = CIFilter(name: "CISepiaTone")
-    
-        comicEffect!.setValue(cameraImage, forKey: kCIInputImageKey)
-        let filteredImage = UIImage(CIImage: comicEffect!.outputImage!)
+        let comicEffect = getFilter(cameraImage)
+        let filteredImage = UIImage(CIImage: comicEffect.outputImage!)
         dispatch_async(dispatch_get_main_queue())
             {
                 self.imageView.image = filteredImage
