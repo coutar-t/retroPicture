@@ -163,7 +163,7 @@ extension ViewController:  AVCaptureVideoDataOutputSampleBufferDelegate{
     }
     
     func getFilter(cameraImage: CIImage!) -> CIFilter {
-        var comicEffect = CIFilter(name: self.effect[self.selectedEffect])
+        let comicEffect = CIFilter(name: self.effect[self.selectedEffect])
         comicEffect!.setValue(cameraImage, forKey: kCIInputImageKey)
         return comicEffect!
     }
