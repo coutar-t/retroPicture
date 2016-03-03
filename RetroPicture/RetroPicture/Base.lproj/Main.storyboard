@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,16 +18,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YAT-6C-iVi">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YAT-6C-iVi">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Vgf-ig-bwP">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Vgf-ig-bwP">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ajV-TC-rJy">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ajV-TC-rJy">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0kj-qh-39T">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0kj-qh-39T">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                                     </imageView>
                                                 </subviews>
@@ -35,7 +36,7 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AOp-YH-zyv">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AOp-YH-zyv">
                                 <rect key="frame" x="162" y="597" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.78259980366492143" green="0.78259980366492143" blue="0.78259980366492143" alpha="0.6122839095744681" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="ClickPicture"/>
@@ -43,7 +44,7 @@
                                     <action selector="takePictureClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="i6P-yB-2RZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A33-iN-G6y">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A33-iN-G6y">
                                 <rect key="frame" x="25" y="597" width="104" height="50"/>
                                 <state key="normal" image="Switch Camera Filled-50"/>
                                 <connections>
@@ -52,6 +53,17 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="YAT-6C-iVi" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="3sB-ao-90m"/>
+                            <constraint firstAttribute="trailing" secondItem="YAT-6C-iVi" secondAttribute="trailing" id="78z-D5-gLT"/>
+                            <constraint firstItem="AOp-YH-zyv" firstAttribute="centerX" secondItem="YAT-6C-iVi" secondAttribute="centerX" id="B5M-ea-1Rj"/>
+                            <constraint firstItem="YAT-6C-iVi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="C5P-5T-J2I"/>
+                            <constraint firstItem="A33-iN-G6y" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="9" id="Cow-Co-RiA"/>
+                            <constraint firstAttribute="bottom" secondItem="A33-iN-G6y" secondAttribute="bottom" constant="20" symbolic="YES" id="Hce-pW-jfJ"/>
+                            <constraint firstItem="AOp-YH-zyv" firstAttribute="leading" secondItem="A33-iN-G6y" secondAttribute="trailing" constant="33" id="Hdz-WQ-ede"/>
+                            <constraint firstItem="YAT-6C-iVi" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="N7G-mo-mR2"/>
+                            <constraint firstItem="AOp-YH-zyv" firstAttribute="top" secondItem="A33-iN-G6y" secondAttribute="top" id="hPp-wr-oP7"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -76,24 +88,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BmG-zg-XWU">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BmG-zg-XWU">
                                 <rect key="frame" x="20" y="79" width="335" height="415"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zHK-nt-Zgc">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zHK-nt-Zgc">
                                 <rect key="frame" x="20" y="540" width="175" height="30"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="OnSaveClick:" destination="gvb-CF-sCN" eventType="touchUpInside" id="cV2-0Q-HlH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ys-i1-6Af">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ys-i1-6Af">
                                 <rect key="frame" x="203" y="540" width="152" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="152" id="5rW-jK-1K2"/>
+                                </constraints>
                                 <state key="normal" title="Share"/>
                                 <connections>
                                     <action selector="OnShareClick:" destination="gvb-CF-sCN" eventType="touchUpInside" id="dFR-Um-pPY"/>
                                 </connections>
                             </button>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2dw-ae-C3g">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2dw-ae-C3g">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
@@ -108,6 +123,20 @@
                             </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BmG-zg-XWU" firstAttribute="leading" secondItem="utD-et-RsL" secondAttribute="leadingMargin" constant="4" id="0Bo-CK-mD1"/>
+                            <constraint firstItem="6ys-i1-6Af" firstAttribute="leading" secondItem="zHK-nt-Zgc" secondAttribute="trailing" constant="8" symbolic="YES" id="6vb-7G-Uxa"/>
+                            <constraint firstAttribute="trailing" secondItem="2dw-ae-C3g" secondAttribute="trailing" id="9mQ-lB-Dq9"/>
+                            <constraint firstItem="2dw-ae-C3g" firstAttribute="top" secondItem="Pfo-Bq-hln" secondAttribute="bottom" id="CUD-1f-Z6K"/>
+                            <constraint firstItem="6ys-i1-6Af" firstAttribute="baseline" secondItem="zHK-nt-Zgc" secondAttribute="baseline" id="CqB-8h-J9V"/>
+                            <constraint firstItem="erX-L5-aIi" firstAttribute="top" secondItem="zHK-nt-Zgc" secondAttribute="bottom" constant="97" id="FXd-aU-w4q"/>
+                            <constraint firstItem="6ys-i1-6Af" firstAttribute="trailing" secondItem="BmG-zg-XWU" secondAttribute="trailing" id="P1m-wF-wEi"/>
+                            <constraint firstItem="zHK-nt-Zgc" firstAttribute="top" secondItem="BmG-zg-XWU" secondAttribute="bottom" constant="46" id="VaK-ne-Df3"/>
+                            <constraint firstItem="BmG-zg-XWU" firstAttribute="top" secondItem="2dw-ae-C3g" secondAttribute="bottom" constant="15" id="kYB-vI-w83"/>
+                            <constraint firstItem="2dw-ae-C3g" firstAttribute="leading" secondItem="utD-et-RsL" secondAttribute="leading" id="n82-A3-7ja"/>
+                            <constraint firstItem="zHK-nt-Zgc" firstAttribute="leading" secondItem="BmG-zg-XWU" secondAttribute="leading" id="rcg-sY-X4W"/>
+                            <constraint firstItem="2dw-ae-C3g" firstAttribute="centerX" secondItem="BmG-zg-XWU" secondAttribute="centerX" id="xm5-d6-kDs"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
