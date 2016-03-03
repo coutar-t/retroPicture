@@ -19,11 +19,39 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     var videoDataOutput: AVCaptureVideoDataOutput!; 
     var videoDataOutputQueue : dispatch_queue_t!;
     var previewLayer:AVCaptureVideoPreviewLayer!;
-    var videoDevice : AVCaptureDevice!
+    var videoDeviceBack : AVCaptureDevice!
+    var videoDeviceFront : AVCaptureDevice!
     let session=AVCaptureSession();
     var imageData : CIImage!
     var effect = ["CISepiaTone", "CIPhotoEffectNoir", "CICrystallize", "CIEdges", "CIEdgeWork", "CIGloom", "CIHexagonalPixellate", "CILineOverlay", "CIPixellate", "CIPointillize"]
     var selectedEffect : Int!
+    var selectedCamera : Bool!
+    var deviceInput:AVCaptureDeviceInput?
+
+    
+    @IBAction func changeCameraClick(sender: AnyObject) {
+        self.session.removeInput(deviceInput)
+        if (selectedCamera==true) {
+            do {
+                deviceInput = try AVCaptureDeviceInput(device: videoDeviceFront)
+            } catch let error as NSError {
+                deviceInput = nil
+            };
+
+        } else {
+            do {
+                deviceInput = try AVCaptureDeviceInput(device: videoDeviceBack)
+            } catch let error as NSError {
+                deviceInput = nil
+            };
+        }
+        selectedCamera = !selectedCamera
+        self.session.addInput(deviceInput!)
+        self.videoDataOutput.connectionWithMediaType(AVMediaTypeVideo).videoOrientation = AVCaptureVideoOrientation.Portrait
+
+        self.session.commitConfiguration()
+        
+    }
     
     @IBAction func takePictureClick(sender: AnyObject) {
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
@@ -53,6 +81,7 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.selectedCamera = true
         self.selectedEffect = 0
         self.mixpanel.track("FIRST", properties: ["filter" : "1"]);
         self.session.sessionPreset = AVCaptureSessionPresetPhoto
@@ -120,21 +149,22 @@ extension ViewController:  AVCaptureVideoDataOutputSampleBufferDelegate{
         for device in devices {
             if (device.hasMediaType(AVMediaTypeVideo)) {
                 if(device.position == AVCaptureDevicePosition.Back) {
-                    videoDevice = device as? AVCaptureDevice;
-                    if videoDevice != nil {
-                        beginSession();
-                        break;
-                    }
+                    videoDeviceBack = device as? AVCaptureDevice;
+                }
+                if(device.position == AVCaptureDevicePosition.Front) {
+                    videoDeviceFront = device as? AVCaptureDevice;
                 }
             }
+        }
+        if videoDeviceBack != nil {
+            beginSession();
         }
     }
     
     func beginSession(){
         var err : NSError? = nil
-        var deviceInput:AVCaptureDeviceInput?
         do {
-            deviceInput = try AVCaptureDeviceInput(device: videoDevice)
+            deviceInput = try AVCaptureDeviceInput(device: videoDeviceBack)
         } catch let error as NSError {
             err = error
             deviceInput = nil

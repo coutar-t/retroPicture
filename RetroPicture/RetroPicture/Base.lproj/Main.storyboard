@@ -17,26 +17,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0kj-qh-39T">
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YAT-6C-iVi">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </imageView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" onImage="Picture" offImage="Video" translatesAutoresizingMaskIntoConstraints="NO" id="fiY-8h-L9G">
-                                <rect key="frame" x="58" y="616" width="51" height="31"/>
-                            </switch>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Picture" translatesAutoresizingMaskIntoConstraints="NO" id="Lsi-M3-vG6">
-                                <rect key="frame" x="115" y="618" width="27" height="25"/>
-                                <color key="backgroundColor" red="0.78259980366492143" green="0.78259980366492143" blue="0.78259980366492143" alpha="0.60999999999999999" colorSpace="calibratedRGB"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Video" translatesAutoresizingMaskIntoConstraints="NO" id="9fK-OJ-LdG">
-                                <rect key="frame" x="20" y="618" width="30" height="25"/>
-                                <color key="backgroundColor" red="0.72480425086049916" green="0.74173992378248543" blue="0.78259980366492143" alpha="0.60999999999999999" colorSpace="calibratedRGB"/>
-                            </imageView>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Vgf-ig-bwP">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ajV-TC-rJy">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0kj-qh-39T">
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                                    </imageView>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AOp-YH-zyv">
                                 <rect key="frame" x="162" y="597" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.78259980366492143" green="0.78259980366492143" blue="0.78259980366492143" alpha="0.6122839095744681" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="ClickPicture"/>
                                 <connections>
                                     <action selector="takePictureClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="i6P-yB-2RZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A33-iN-G6y">
+                                <rect key="frame" x="25" y="597" width="104" height="50"/>
+                                <state key="normal" image="Switch Camera Filled-50"/>
+                                <connections>
+                                    <action selector="changeCameraClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TYC-Fc-CMp"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -110,7 +121,6 @@
     </scenes>
     <resources>
         <image name="ClickPicture" width="50" height="50"/>
-        <image name="Picture" width="50" height="50"/>
-        <image name="Video" width="50" height="50"/>
+        <image name="Switch Camera Filled-50" width="50" height="50"/>
     </resources>
 </document>
